@@ -8,50 +8,55 @@ return {
     config = function()
       require('telescope').setup {
         defaults = {
-          layout_strategy = 'vertical',
+          -- More beginner-friendly UI
+          initial_mode = "insert",
+          prompt_prefix = "🔍 ",
+          selection_caret = "➤ ",
+          path_display = { "truncate" },
+          
+          layout_strategy = 'horizontal',
           layout_config = {
-            vertical = {
-              width = 0.8,
-              height = 0.9,
-              preview_height = 0.5,
+            horizontal = {
+              width = 0.9,
+              height = 0.8,
+              preview_width = 0.6,
             },
             prompt_position = 'top',
           },
+          
           sorting_strategy = 'ascending',
-          borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+          file_ignore_patterns = {
+            "node_modules", ".git", "dist", "build"
+          },
+          
+          -- Help text at the bottom
+          results_title = "Files (↑↓:Navigate, Enter:Open, Esc:Cancel)",
+          
           mappings = {
             i = {
-              ['<C-u>'] = false,
-              ['<C-d>'] = false,
+              -- More intuitive mappings
               ["<C-j>"] = "move_selection_next",
               ["<C-k>"] = "move_selection_previous",
+              ["<C-n>"] = "move_selection_next",
+              ["<C-p>"] = "move_selection_previous",
+              ["<Down>"] = "move_selection_next",
+              ["<Up>"] = "move_selection_previous",
+              ["<C-c>"] = "close",
+              ["<C-u>"] = false,
             },
           },
-          -- Larger icons for better touch targets
-          entry_prefix = "  ",
-          selection_caret = "❯ ",
-          path_display = { "truncate" },
         },
         pickers = {
           find_files = {
             theme = "dropdown",
-            previewer = false,
+            previewer = true,
             layout_config = { width = 0.8 },
           },
-          buffers = {
+          live_grep = {
             theme = "dropdown",
-            previewer = false,
-            layout_config = { width = 0.8 },
           },
         },
       }
-      
-      -- Telescope keymaps
-      local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-      vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-      vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
     end
   }
 }

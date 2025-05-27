@@ -5,6 +5,9 @@ vim.g.maplocalleader = ' '
 -- Load options
 require('options')
 
+-- Load keymaps (added this line)
+require('keymaps')
+
 -- Setup lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -18,34 +21,29 @@ vim.opt.rtp:prepend(lazypath)
 -- Load plugins
 require('lazy').setup('plugins')
 
--- Set up global keymaps that work well with touch
--- Create a floating menu for common actions
-vim.api.nvim_set_keymap('n', '<leader>m', "<cmd>lua require('which-key').show()<CR>", { noremap = true, silent = true })
-
--- Add basic touch gestures if in GUI mode
-if vim.fn.has('nvim-0.9') == 1 then
-  -- Add any touch-specific configuration here when using GUI frontends
-  -- This will be expanded in the future as Neovim GUI clients improve touch support
-end
-
 -- Set cursor to block for better touch visibility
 vim.opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
 
-vim.cmd[[colorscheme tokyonight]]
-require('nvim-tree').setup()
+-- Show a welcome message for beginners
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    if vim.fn.argc() == 0 then
+      vim.cmd [[
+        lua vim.notify(
+          "Welcome to Neovim!\n" ..
+          "• Press <leader>m (Space+m) for menu\n" ..
+          "• Press <C-e> (Ctrl+e) for file explorer\n" ..
+          "• Press <C-p> (Ctrl+p) to find files\n" ..
+          "• Press <C-s> (Ctrl+s) to save\n" ..
+          "• Press <C-q> (Ctrl+q) to quit", 
+          "info", { title = "Beginner Tips", timeout = 10000 }
+        )
+      ]]
+    end
+  end,
+})
 
-local dap = require('dap')
-local dapui = require('dapui')
-
-dapui.setup()
-dap.listeners.after.event_initialized['dapui_config'] = function()
-  dapui.open()
-end
-dap.listeners.before.event_terminated['dapui_config'] = function()
-  dapui.close()
-end
-dap.listeners.before.event_exited['dapui_config'] = function()
-  dapui.close()
-end
+-- Note: Configuration for plugins has been moved to their respective files
+-- under lua/plugins/ directory
 
 
