@@ -21,8 +21,17 @@ require('lazy').setup('plugins')
 -- Set cursor to block for better touch visibility
 vim.opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
 
--- Show a welcome message for beginners (fixed syntax)
-vim.api.nvim_create_autocmd("VimEnter", {
+-- Load keymaps after plugins
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  callback = function()
+    require('keymaps')
+  end,
+})
+
+-- Show a welcome message for beginners
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
   callback = function()
     if vim.fn.argc() == 0 then
       local msg = "Welcome to Neovim!\n" ..
@@ -32,16 +41,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
         "• Press <C-s> (Ctrl+s) to save\n" ..
         "• Press <C-q> (Ctrl+q) to quit"
       
-      vim.notify(msg, "info", { title = "Beginner Tips", timeout = 10000 })
+      vim.defer_fn(function()
+        vim.notify(msg, "info", { title = "Beginner Tips", timeout = 10000 })
+      end, 500)
     end
   end,
 })
-
--- Load keymaps (after plugins are loaded)
-vim.defer_fn(function()
-  if vim.fn.filereadable(vim.fn.stdpath('config') .. '/lua/keymaps.lua') == 1 then
-    require('keymaps')
-  end
-end, 100)
 
 

@@ -24,7 +24,7 @@ keymap('n', '<C-p>', ':Telescope find_files<CR>', opts)
 keymap('n', '<C-f>', ':Telescope live_grep<CR>', opts)
 
 -- Search in current file
-keymap('n', '<C-h>', '/', opts) -- Start search
+keymap('n', '/', '/', { noremap = true }) -- Start search
 keymap('n', 'n', 'n', opts) -- Next match
 keymap('n', 'N', 'N', opts) -- Previous match
 
@@ -51,10 +51,11 @@ keymap('n', '<leader>p', '"+p', opts)      -- Paste from system clipboard
 keymap('n', '<C-a>', 'ggVG', opts)         -- Select all text
 
 -- Window navigation
-keymap('n', '<C-h>', '<C-w>h', opts) -- Move to left window
-keymap('n', '<C-j>', '<C-w>j', opts) -- Move to window below
-keymap('n', '<C-k>', '<C-w>k', opts) -- Move to window above
-keymap('n', '<C-l>', '<C-w>l', opts) -- Move to right window
+-- Avoid conflict with <C-h> for search
+keymap('n', '<C-Left>', '<C-w>h', opts) -- Move to left window
+keymap('n', '<C-Down>', '<C-w>j', opts) -- Move to window below
+keymap('n', '<C-Up>', '<C-w>k', opts) -- Move to window above
+keymap('n', '<C-Right>', '<C-w>l', opts) -- Move to right window
 
 -- Beginner-friendly undo/redo
 keymap('n', '<C-z>', 'u', opts)       -- Undo
@@ -63,18 +64,17 @@ keymap('n', '<C-y>', '<C-r>', opts)   -- Redo
 -- Easy way to exit insert mode
 keymap('i', 'jk', '<Esc>', opts)
 
--- Show command menu for beginners (protected against which-key errors)
-if pcall(require, 'which-key') then
-  keymap('n', '<leader>m', ":WhichKey '<Space>'<CR>", opts)
-  
-  -- Show help commands
-  keymap('n', '<leader>h', ":Telescope help_tags<CR>", opts)
-  
-  -- Show keymaps
-  keymap('n', '<leader>k', ":Telescope keymaps<CR>", opts)
-else
-  print("which-key not available, some keymaps won't work")
-end
+-- Show which-key
+keymap('n', '<leader>m', ':WhichKey<CR>', opts)
+
+-- Help
+keymap('n', '<leader>?', function()
+  if pcall(require, 'beginner_help') then
+    require('beginner_help').show_help()
+  else
+    vim.cmd('help')
+  end
+end, opts)
 -- Quick settings menu (explained for beginners)
 keymap('n', '<leader>s', function()
   local menu = {

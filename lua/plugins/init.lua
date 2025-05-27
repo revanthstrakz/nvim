@@ -143,24 +143,24 @@ return {
   -- UI Enhancements
   { 'stevearc/dressing.nvim' },
   
-  -- Search and Replace
-  { 'nvim-pack/nvim-spectre' },
-
-  -- Colorscheme
-  { 
-    'folke/tokyonight.nvim',
+  -- Which-key for command hints
+  {
+    'folke/which-key.nvim',
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
     config = function()
-      vim.cmd[[colorscheme tokyonight]]
-    end
-  },
-}
+      require('which-key').setup({
+        window = {
           border = 'single',
-          padding = { 2, 2, 2, 2 }, -- Increase padding for touch targets
+          padding = { 2, 2, 2, 2 },
         },
         layout = {
           height = { min = 4, max = 25 },
           width = { min = 20, max = 80 },
-          spacing = 4, -- Increase spacing for touch targets
+          spacing = 4,
         },
       })
       

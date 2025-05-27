@@ -23,6 +23,10 @@ return {
           separator = "➜",
           group = "+",
         },
+        disable = {
+          buftypes = {},
+          filetypes = { "TelescopePrompt" },
+        },
       })
       
       -- Register which-key mappings
@@ -43,6 +47,12 @@ return {
         c = { "<cmd>Telescope commands<CR>", "Commands" },
         h = { "<cmd>Telescope help_tags<CR>", "Help" },
         k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
+        s = {
+          name = "Settings",
+          n = { "<cmd>set number!<CR>", "Toggle Line Numbers" },
+          r = { "<cmd>set relativenumber!<CR>", "Toggle Relative Numbers" },
+          w = { "<cmd>set wrap!<CR>", "Toggle Word Wrap" },
+        },
       }, { prefix = "<leader>" })
     end
   }

@@ -63,7 +63,7 @@ M.show_help = function()
 
 | Shortcut       | Action                       |
 |----------------|------------------------------|
-| <C-h/j/k/l>    | Navigate between windows     |
+| <C-Left/Down/Up/Right> | Navigate between windows     |
 | :split         | Split window horizontally    |
 | :vsplit        | Split window vertically      |
 | :tabnew        | Create new tab               |
@@ -79,16 +79,6 @@ M.show_help = function()
 | <A-x>          | Alt+x                        |
 | <S-x>          | Shift+x                      |
 | <leader>       | Space key                    |
-
-## Other Useful Commands
-
-| Shortcut       | Action                       |
-|----------------|------------------------------|
-| <leader>m      | Show command menu            |
-| <leader>h      | Search help topics           |
-| <leader>k      | Show all keymaps             |
-| <leader>s      | Quick settings menu          |
-
 ]]
 
   -- Create a scratch buffer
@@ -107,6 +97,16 @@ M.show_help = function()
   vim.cmd('setlocal filetype=markdown')
   vim.cmd('setlocal nomodifiable')
   vim.cmd('setlocal readonly')
+  
+  -- Add a keymap to close the help
+  vim.api.nvim_buf_set_keymap(0, 'n', 'q', ':bd<CR>', { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(0, 'n', '<Esc>', ':bd<CR>', { noremap = true, silent = true })
+  
+  -- Show a message about how to close
+  vim.api.nvim_echo({{'Press q or <Esc> to close this help', 'WarningMsg'}}, true, {})
+end
+
+return M
   
   -- Add a keymap to close the help
   vim.api.nvim_buf_set_keymap(0, 'n', 'q', ':bd<CR>', { noremap = true, silent = true })
