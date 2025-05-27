@@ -86,32 +86,21 @@ M.show_help = function()
   vim.cmd('setlocal buftype=nofile')
   vim.cmd('setlocal bufhidden=hide')
   vim.cmd('setlocal noswapfile')
-  
+
   -- Set buffer name
   vim.api.nvim_buf_set_name(0, 'Neovim Beginner Help')
-  
+
   -- Insert help text
   vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(help_text, '\n'))
-  
+
   -- Set filetype to markdown for nice formatting
   vim.cmd('setlocal filetype=markdown')
   vim.cmd('setlocal nomodifiable')
   vim.cmd('setlocal readonly')
-  
   -- Add a keymap to close the help
   vim.api.nvim_buf_set_keymap(0, 'n', 'q', ':bd<CR>', { noremap = true, silent = true })
   vim.api.nvim_buf_set_keymap(0, 'n', '<Esc>', ':bd<CR>', { noremap = true, silent = true })
-  
-  -- Show a message about how to close
-  vim.api.nvim_echo({{'Press q or <Esc> to close this help', 'WarningMsg'}}, true, {})
-end
 
-return M
-  
-  -- Add a keymap to close the help
-  vim.api.nvim_buf_set_keymap(0, 'n', 'q', ':bd<CR>', { noremap = true, silent = true })
-  vim.api.nvim_buf_set_keymap(0, 'n', '<Esc>', ':bd<CR>', { noremap = true, silent = true })
-  
   -- Show a message about how to close
   vim.api.nvim_echo({{'Press q or <Esc> to close this help', 'WarningMsg'}}, true, {})
 end

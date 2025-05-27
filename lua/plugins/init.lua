@@ -164,21 +164,25 @@ return {
         },
       })
       
-      -- Register whichkey mappings with new format
+      -- Register which-key mappings with correct format
       local wk = require('which-key')
       wk.register({
-        { "<leader>f", group = "File" },
-        { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find File" },
-        { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent Files" },
-        { "<leader>fn", "<cmd>enew<CR>", desc = "New File" },
+        f = {
+          name = "File",
+          f = { "<cmd>Telescope find_files<CR>", "Find File" },
+          r = { "<cmd>Telescope oldfiles<CR>", "Recent Files" },
+          n = { "<cmd>enew<CR>", "New File" },
+        },
         
-        { "<leader>e", "<cmd>Neotree toggle<CR>", desc = "Explorer" },
+        e = { "<cmd>Neotree toggle<CR>", "Explorer" },
         
-        { "<leader>b", group = "Buffer" },
-        { "<leader>bn", "<cmd>bnext<CR>", desc = "Next Buffer" },
-        { "<leader>bp", "<cmd>bprevious<CR>", desc = "Previous Buffer" },
-        { "<leader>bd", "<cmd>bdelete<CR>", desc = "Delete Buffer" },
-      })
+        b = {
+          name = "Buffer",
+          n = { "<cmd>bnext<CR>", "Next Buffer" },
+          p = { "<cmd>bprevious<CR>", "Previous Buffer" },
+          d = { "<cmd>bdelete<CR>", "Delete Buffer" },
+        },
+      }, { prefix = "<leader>" })
     end
   },
   

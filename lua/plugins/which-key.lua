@@ -29,29 +29,35 @@ return {
         },
       })
       
-      -- Register which-key mappings using the new specification format
+      -- Register which-key mappings using the correct format
       wk.register({
-        { "<leader>f", group = "File" },
-        { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find File" },
-        { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent Files" },
-        { "<leader>fn", "<cmd>enew<CR>", desc = "New File" },
+        f = { 
+          name = "File",
+          f = { "<cmd>Telescope find_files<CR>", "Find File" },
+          r = { "<cmd>Telescope oldfiles<CR>", "Recent Files" },
+          n = { "<cmd>enew<CR>", "New File" },
+        },
         
-        { "<leader>e", "<cmd>NvimTreeToggle<CR>", desc = "Explorer" },
+        e = { "<cmd>NvimTreeToggle<CR>", "Explorer" },
         
-        { "<leader>b", group = "Buffer" },
-        { "<leader>bn", "<cmd>bnext<CR>", desc = "Next Buffer" },
-        { "<leader>bp", "<cmd>bprevious<CR>", desc = "Previous Buffer" },
-        { "<leader>bd", "<cmd>bdelete<CR>", desc = "Delete Buffer" },
+        b = { 
+          name = "Buffer",
+          n = { "<cmd>bnext<CR>", "Next Buffer" },
+          p = { "<cmd>bprevious<CR>", "Previous Buffer" },
+          d = { "<cmd>bdelete<CR>", "Delete Buffer" },
+        },
         
-        { "<leader>c", "<cmd>Telescope commands<CR>", desc = "Commands" },
-        { "<leader>h", "<cmd>Telescope help_tags<CR>", desc = "Help" },
-        { "<leader>k", "<cmd>Telescope keymaps<CR>", desc = "Keymaps" },
+        c = { "<cmd>Telescope commands<CR>", "Commands" },
+        h = { "<cmd>Telescope help_tags<CR>", "Help" },
+        k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
         
-        { "<leader>s", group = "Settings" },
-        { "<leader>sn", "<cmd>set number!<CR>", desc = "Toggle Line Numbers" },
-        { "<leader>sr", "<cmd>set relativenumber!<CR>", desc = "Toggle Relative Numbers" },
-        { "<leader>sw", "<cmd>set wrap!<CR>", desc = "Toggle Word Wrap" },
-      })
+        s = { 
+          name = "Settings",
+          n = { "<cmd>set number!<CR>", "Toggle Line Numbers" },
+          r = { "<cmd>set relativenumber!<CR>", "Toggle Relative Numbers" },
+          w = { "<cmd>set wrap!<CR>", "Toggle Word Wrap" },
+        },
+      }, { prefix = "<leader>" })
     end
   }
 }
