@@ -15,9 +15,9 @@ keymap('i', '<C-s>', '<Esc>:w<CR>', opts)
 -- Quit
 keymap('n', '<C-q>', ':q<CR>', opts)
 
--- Explorer (using Neo-tree, more touch-friendly)
-keymap('n', '<C-e>', ':Neotree toggle<CR>', opts)
-keymap('n', '<leader>e', ':Neotree focus<CR>', opts)
+-- Explorer (using Neo-tree or nvim-tree)
+keymap('n', '<C-e>', ':NvimTreeToggle<CR>', opts)
+keymap('n', '<leader>e', ':NvimTreeFocus<CR>', opts)
 
 -- Find files (Telescope)
 keymap('n', '<C-p>', ':Telescope find_files<CR>', opts)
@@ -30,7 +30,7 @@ keymap('n', 'N', 'N', opts) -- Previous match
 
 -- Search and Replace
 keymap('n', '<leader>r', ':Spectre<CR>', opts) -- Global search and replace
-keymap('n', '<leader>R', ':%s//', { noremap = true }) -- Replace in current file (type what to search after /)
+keymap('n', '<leader>R', ':%s//', { noremap = true }) -- Replace in current file
 
 -- Copy, Cut, Paste (Vim style)
 -- Normal mode
@@ -44,7 +44,7 @@ keymap('v', 'y', 'y', opts)   -- Copy selection
 keymap('v', 'd', 'd', opts)   -- Cut selection
 keymap('v', 'p', 'p', opts)   -- Paste over selection
 
--- Additional Clipboard integration (works with system clipboard)
+-- Additional Clipboard integration
 keymap('n', '<leader>y', '"+y', opts)      -- Copy to system clipboard
 keymap('v', '<leader>y', '"+y', opts)      -- Copy selection to system clipboard
 keymap('n', '<leader>p', '"+p', opts)      -- Paste from system clipboard
@@ -63,18 +63,18 @@ keymap('n', '<C-y>', '<C-r>', opts)   -- Redo
 -- Easy way to exit insert mode
 keymap('i', 'jk', '<Esc>', opts)
 
--- Touch-friendly menu
-keymap('n', '<leader>m', ":lua require('which-key').show()<CR>", opts)
-
--- Quick command palette
-keymap('n', '<leader>c', ":Telescope commands<CR>", opts)
-
--- Help
-keymap('n', '<leader>h', ":Telescope help_tags<CR>", opts)
-
--- Show keymaps
-keymap('n', '<leader>k', ":Telescope keymaps<CR>", opts)
-
+-- Show command menu for beginners (protected against which-key errors)
+if pcall(require, 'which-key') then
+  keymap('n', '<leader>m', ":WhichKey '<Space>'<CR>", opts)
+  
+  -- Show help commands
+  keymap('n', '<leader>h', ":Telescope help_tags<CR>", opts)
+  
+  -- Show keymaps
+  keymap('n', '<leader>k', ":Telescope keymaps<CR>", opts)
+else
+  print("which-key not available, some keymaps won't work")
+end
 -- Quick settings menu (explained for beginners)
 keymap('n', '<leader>s', function()
   local menu = {

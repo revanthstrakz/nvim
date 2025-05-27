@@ -79,11 +79,11 @@ return {
     config = function()
       require('noice').setup({
         cmdline = {
-          view = 'cmdline_popup',  -- Use a popup for the command line
-          size = 30,  -- Larger size for touch targets
+          view = 'cmdline_popup',
+          size = 30,
         },
         popupmenu = {
-          enabled = true,  -- Enable popup menu for completions
+          enabled = true,
         },
         lsp = {
           override = {
@@ -101,7 +101,7 @@ return {
           hover = {
             enabled = true,
             silent = false,
-            size = { max_height = 20, max_width = 80 }, -- Larger size for hover popups
+            size = { max_height = 20, max_width = 80 },
           },
         },
       })
@@ -123,7 +123,7 @@ return {
         window = {
           width = 30,
           mappings = {
-            ['<space>'] = 'none',  -- Free up space key for leader
+            ['<space>'] = 'none',
           },
         },
         filesystem = {
@@ -136,11 +136,6 @@ return {
             hide_gitignored = false,
           },
         },
-        icon = {
-          folder_closed = '󰉋',
-          folder_open = '󰝰',
-          folder_empty = '󰷏',
-        },
       })
     end
   },
@@ -148,12 +143,17 @@ return {
   -- UI Enhancements
   { 'stevearc/dressing.nvim' },
   
-  -- Better UI elements
-  {
-    'folke/which-key.nvim',
+  -- Search and Replace
+  { 'nvim-pack/nvim-spectre' },
+
+  -- Colorscheme
+  { 
+    'folke/tokyonight.nvim',
     config = function()
-      require('which-key').setup({
-        window = {
+      vim.cmd[[colorscheme tokyonight]]
+    end
+  },
+}
           border = 'single',
           padding = { 2, 2, 2, 2 }, -- Increase padding for touch targets
         },
