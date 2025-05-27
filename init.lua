@@ -18,8 +18,18 @@ vim.opt.rtp:prepend(lazypath)
 -- Load plugins
 require('lazy').setup('plugins')
 
--- Note: Configuration for plugins has been moved to their respective files
--- under lua/plugins/ directory
+-- Set up global keymaps that work well with touch
+-- Create a floating menu for common actions
+vim.api.nvim_set_keymap('n', '<leader>m', "<cmd>lua require('which-key').show()<CR>", { noremap = true, silent = true })
+
+-- Add basic touch gestures if in GUI mode
+if vim.fn.has('nvim-0.9') == 1 then
+  -- Add any touch-specific configuration here when using GUI frontends
+  -- This will be expanded in the future as Neovim GUI clients improve touch support
+end
+
+-- Set cursor to block for better touch visibility
+vim.opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
 
 vim.cmd[[colorscheme tokyonight]]
 require('nvim-tree').setup()
