@@ -68,13 +68,14 @@ keymap('i', 'jk', '<Esc>', opts)
 keymap('n', '<leader>m', ':WhichKey<CR>', opts)
 
 -- Help
-keymap('n', '<leader>?', function()
+keymap('n', '<leader>h', function()
   if pcall(require, 'beginner_help') then
     require('beginner_help').show_help()
   else
     vim.cmd('help')
   end
 end, opts)
+
 -- Quick settings menu (explained for beginners)
 keymap('n', '<leader>s', function()
   local menu = {
@@ -94,5 +95,4 @@ keymap('n', '<leader>s', function()
     end
   end)
 end, opts)
-
 keymap('n', '<leader>?', ":lua require('beginner_help').show_help()<CR>", opts)
